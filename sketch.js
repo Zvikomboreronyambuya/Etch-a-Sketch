@@ -5,6 +5,7 @@ const changeGridButton = document.getElementById('increase-grid-button'); // Upd
 const colorPicker = document.getElementById('color-picker');
 const eraserButton = document.getElementById('eraser-button');
 let isDrawing = false;
+let touchStartX, touchStartY; // Variables to track touch start position
 let eraserMode = false;
 let color = '#333';
 
@@ -18,7 +19,6 @@ function createGrid(size) {
     container.style.gridTemplateColumns = `repeat(${size}, 1fr`;
     container.style.gridTemplateRows = `repeat(${size}, 1fr`;
     addDragColorListeners();
-    addTouchHoverColorListeners(); // Add touch hover color listeners
 }
 
 function clearGrid() {
@@ -58,10 +58,53 @@ function addDragColorListeners() {
     });
 }
 
-function addTouchHoverColorListeners() {
+function addTouchColorListeners() {
+    let touchStarted = false; // Track if touch event has started
+
     container.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // Prevent default touch behavior
+        isDrawing = true;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStarted = true;
+
         if (e.target.classList.contains('grid-square')) {
-            e.target.style.backgroundColor = getColor();
+            if (eraserMode) {
+                e.target.style.backgroundColor = 'transparent'; // Enable eraser mode for touch
+            } else {
+                e.target.style.backgroundColor = getColor();
+            }
+        }
+    });
+
+    container.addEventListener('touchend', () => {
+        isDrawing = false;
+        touchStarted = false;
+    });
+
+    container.addEventListener('touchmove', (e) => {
+        if (isDrawing && touchStarted) {
+            const touchEndX = e.touches[0].clientX;
+            const touchEndY = e.touches[0].clientY;
+
+            if (e.target.classList.contains('grid-square')) {
+                if (eraserMode) {
+                    e.target.style.backgroundColor = 'transparent'; // Enable eraser mode for touch
+                } else {
+                    e.target.style.backgroundColor = getColor();
+                }
+            }
+
+            // Determine if the user is swiping left/right or up/down
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                e.preventDefault(); // Prevent horizontal page scrolling
+            }
+
+            touchStartX = touchEndX;
+            touchStartY = touchEndY;
         }
     });
 }
@@ -102,3 +145,4 @@ resetButton.addEventListener('click', () => {
     createGrid(16); // Always reset to 16x16
 });
 createGrid(16);
+addTouchColorListeners(); // Add touch event listeners
