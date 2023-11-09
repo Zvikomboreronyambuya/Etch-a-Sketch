@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Etch-a-Sketch</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="./style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Etch-a-Sketch</h1>
+            <button id="reset-button">Reset Grid</button>
+            <input type="range" id="grid-slider" min="1" max="100" value="16">
+            <span id="grid-slider-value">16x16</span>
+            <button id="increase-grid-button">Change Grid</button>
+            <input type="color" id="color-picker" value="#333333">
+            <button id="eraser-button">Eraser Mode: OFF</button>
+        </header>
+        <div class="container"></div>
+        <footer>
+            <p> Copyright &#169; Owen Nyambuya</p>
+        </footer>
+        <script src="./sketch.js"></script>
+    </body>
+</html>

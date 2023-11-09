@@ -1,0 +1,105 @@
+footer{
+    display: flex;
+    justify-content: center;
+    color: white;
+    size: 70px;
+    background:#021227;
+    align-items: center;
+    margin-top: 20px;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    background-color: #f2f2f2; 
+    }
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(16, 30px);
+    grid-template-rows: repeat(16, 30px);
+    gap: 1px;
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    background-color: #ffffff;
+}
+
+.container div {
+    background-color: #fff;
+    border: 1px solid #333;
+}
+
+.container div:hover {
+    background-color: #333;
+}
+
+#reset-button,
+#increase-grid-button {
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+#color-picker {
+    width: 30px;
+    height: 30px;
+}
+
+#reset-button:hover,
+#increase-grid-button:hover,
+#eraser-button:hover {
+    background-color: #555;
+}
+
+#eraser-button {
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+/* Add a tooltip style for the slider */
+#grid-slider::before {
+    content: attr(title);
+    position: absolute;
+    display: none;
+    background-color: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#grid-slider:hover::before {
+    display: block;
+    opacity: 1;
+}
+
+/* Mobile-first styles */
+.container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+    .container {
+        grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns for larger screens */
+    }
+}
+
